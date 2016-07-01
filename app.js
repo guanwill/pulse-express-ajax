@@ -9,7 +9,7 @@ $(function(){
 
 //-----DISPLAYING MUSIC LIST-----
   $.ajax({
-    url: "http://localhost:3000/api/",
+    url: "https://localhost:3000/api/",
     type: "GET",
     dataType : "json",
   })
@@ -33,7 +33,7 @@ $(function(){
     var MusicId = $(this).data('Data-id');
     console.log(MusicId);
     $.ajax({
-        url: 'http://localhost:3000/api/'+MusicId,
+        url: 'https://localhost:3000/api/'+MusicId,
         method: 'GET',
         success: function(data){
 
@@ -50,7 +50,7 @@ $(function(){
     function deleteMusic(){
       var MusicId = $(this).data('Data-id');  //grab specific donut id from the 'delete button' (remember we passed it earlier when we created the button?)
         $.ajax({
-          url: 'http://localhost:3000/api/'+MusicId, //pass the DonutId variable you defined two lines above that carries the specific id
+          url: 'https://localhost:3000/api/'+MusicId, //pass the DonutId variable you defined two lines above that carries the specific id
           method: 'DELETE',
           success: function(data){
             $('div[Data-id="'+MusicId+'"]').remove(); //remember your div container contains a specific id when we create it? we pass it the DonutId variable with specific id, so now it looks for a div with THAT id, then removes it entirely
@@ -66,7 +66,8 @@ $(function(){
   // //       $('#new-form').show();  //when you click on the new button, the new form appears
   //       $('#upload').on('click', function(){ //when you hit the create button.....
   //         $.ajax({
-  //             url: 'http://localhost:3000/api/',
+  //             url: '
+  //localhost:3000/api/',
   //             method: 'POST',
   //             data: {
   //               style: $('#file').val(),  //grabs user input for style
@@ -101,7 +102,7 @@ $(function(){
 var play = function(id) {
   console.log('play function working')
   var audio = new Audio();
-  audio.src = 'http://localhost:3000/api/'+id+'/media';
+  audio.src = 'https://localhost:3000/api/'+id+'/media';
   audio.controls = true;
   audio.loop = true;
   audio.autoplay = true;
