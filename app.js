@@ -20,9 +20,9 @@ $(function(){
         var play = $('<button>').data('Data-id', data[i]._id).text('Play').on('click', playSong); //creates edit button with donut id and carries a function editDonut in which we will define later
 
         // var edit = $('<button>').data('Donut-id', data[i].id).text('Edit').on('click', editDonut); //creates edit button with donut id and carries a function editDonut in which we will define later
-        // var del = $('<button>').data('Donut-id', data[i].id).text('Delete').on('click', deleteDonut);  //creates delete button with donut id and carries a function deleteDonut in which we will define later
-        var container = $('<div>').attr('data-id', data[i]._id);
-        $(container).append(id, title, play); //append all the paragraphs and buttons to a div container
+        var del = $('<button>').data('Data-id', data[i]._id).text('Delete').on('click', deleteMusic);  //creates delete button with donut id and carries a function deleteDonut in which we will define later
+        var container = $('<div>').attr('Data-id', data[i]._id);
+        $(container).append(id, title, play, del); //append all the paragraphs and buttons to a div container
         $('body').append(container) //lastly, append the container to the body tag for it to appear
      }
   });
@@ -45,12 +45,28 @@ $(function(){
     })
   }
 
+  // //-----DELETE MUSIC-----
+    function deleteMusic(){
+      var MusicId = $(this).data('Data-id');  //grab specific donut id from the 'delete button' (remember we passed it earlier when we created the button?)
+        $.ajax({
+          url: 'http://localhost:3000/api/'+MusicId, //pass the DonutId variable you defined two lines above that carries the specific id
+          method: 'DELETE',
+          success: function(data){
+            $('div[Data-id="'+MusicId+'"]').remove(); //remember your div container contains a specific id when we create it? we pass it the DonutId variable with specific id, so now it looks for a div with THAT id, then removes it entirely
+          },
+          error: function(data) {
+        }
+      })
+    }
+
+
+
+
 //-----------------VISUALS----------------
 var play = function(id) {
   console.log('play function working')
   var audio = new Audio();
   audio.src = 'http://localhost:3000/api/'+id+'/media';
-  // audio.src = 'http://localhost:3000/api/music/'+id+'/audio';
   audio.controls = true;
   audio.loop = true;
   audio.autoplay = true;
