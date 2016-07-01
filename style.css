@@ -1,5 +1,5 @@
 * {
-  font-family: 'VT323', Arial, serif; font-weight: 400;
+  font-family: 'VT323', Arial, serif; font-weight: 250;
   color: white;
 }
 
@@ -28,7 +28,7 @@ html, body {
   /*Change color time */
   -webkit-animation: hue 30s infinite linear;
   opacity: .9;
-  z-index: 1;
+  z-index: -1;
 }
 
 /* Fade in and out */
@@ -67,7 +67,7 @@ body {
 .grid-top,
 .grid-bottom {
   position: absolute;
-  z-index: 2;  /* to be below the parent element */
+  z-index: 0;  /* to be below the parent element */
   top: 0;
   right: 0;
   bottom: 0;
@@ -136,5 +136,5 @@ div#mp3_player > canvas {
 }
 
 #analyser_render {
-  z-index: 1;
+  z-index: 9000;
 }
