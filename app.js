@@ -65,21 +65,25 @@ $(function(){
     // $('#new').on('click', function(){
     //       $('#new-form').show();  //when you click on the new button, the new form appears
           $('#upload').on('click', function(){ //when you hit the create button.....
+
+            var formData = new FormData($('#new-form')[0]);
+
             $.ajax({
                 url: 'http://localhost:3000/api/',
                 method: 'POST',
-                data: {
-                  style: $('#file').val(),  //grabs user input for style
-                },
+                data: formData,
+                contentType: false,
+                processData: false,
+                mimeType: "multipart/form-data",
                 success: function(data){  //if successful upon grabbing data
                   console.log(data);
-                  var id = $('<p>').text("Id:" + data[i]._id);
-                  var title = $('<p>').text("Title:" + data[i].originalname);
-                  var play = $('<button>').data('Data-id', data[i]._id).text('Play').on('click', playSong); //creates edit button with donut id and carries a function editDonut in which we will define later
+                  var id = $('<p>').text("Id:" + data._id);
+                  var title = $('<p>').text("Title:" + data.originalname);
+                  var play = $('<button>').data('Data-id', data._id).text('Play').on('click', playSong); //creates edit button with donut id and carries a function editDonut in which we will define later
 
                   // var edit = $('<button>').data('Donut-id', data[i].id).text('Edit').on('click', editDonut); //creates edit button with donut id and carries a function editDonut in which we will define later
-                  var del = $('<button>').data('Data-id', data[i]._id).text('Delete').on('click', deleteMusic);  //creates delete button with donut id and carries a function deleteDonut in which we will define later
-                  var container = $('<div>').attr('Data-id', data[i]._id);
+                  var del = $('<button>').data('Data-id', data._id).text('Delete').on('click', deleteMusic);  //creates delete button with donut id and carries a function deleteDonut in which we will define later
+                  var container = $('<div>').attr('Data-id', data._id);
                   $(container).append(id, title, play, del); //append all the paragraphs and buttons to a div container
                   $('body').append(container) //lastly, append the container to the body tag for it to appear
                   $('#new-form').hide();  //when new donut is created when user clicks create, hide the 'new form'
