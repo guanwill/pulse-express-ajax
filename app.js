@@ -9,7 +9,7 @@ $(function(){
 
 //-----DISPLAYING MUSIC LIST-----
   $.ajax({
-    url: "https://cc3e7e34.ngrok.io/api/",
+    url: "http://localhost:3000/api/",
     type: "GET",
     dataType : "json",
   })
@@ -33,7 +33,7 @@ $(function(){
     var MusicId = $(this).data('Data-id');
     console.log(MusicId);
     $.ajax({
-        url: 'https://cc3e7e34.ngrok.io/api/'+MusicId,
+        url: 'http://localhost:3000/api/'+MusicId,
         method: 'GET',
         success: function(data){
 
@@ -50,7 +50,7 @@ $(function(){
     function deleteMusic(){
       var MusicId = $(this).data('Data-id');  //grab specific donut id from the 'delete button' (remember we passed it earlier when we created the button?)
         $.ajax({
-          url: 'https://cc3e7e34.ngrok.io/api/'+MusicId, //pass the DonutId variable you defined two lines above that carries the specific id
+          url: 'http://localhost:3000/api/'+MusicId, //pass the DonutId variable you defined two lines above that carries the specific id
           method: 'DELETE',
           success: function(data){
             $('div[Data-id="'+MusicId+'"]').remove(); //remember your div container contains a specific id when we create it? we pass it the DonutId variable with specific id, so now it looks for a div with THAT id, then removes it entirely
@@ -60,34 +60,39 @@ $(function(){
       })
     }
 
-  // //-----CREATE MUSIC-----
-  //
-  // // $('#new').on('click', function(){
-  // //       $('#new-form').show();  //when you click on the new button, the new form appears
-  //       $('#upload').on('click', function(){ //when you hit the create button.....
-  //         $.ajax({
-  //             url: '
-  //localhost:3000/api/',
-  //             method: 'POST',
-  //             data: {
-  //               style: $('#file').val(),  //grabs user input for style
-  //             },
-  //             success: function(data){  //if successful upon grabbing data
-  //               console.log(data);
-  //               var id = $('<p>').text("Id:" + data[i]._id);
-  //               var title = $('<p>').text("Title:" + data[i].originalname);
-  //               var play = $('<button>').data('Data-id', data[i]._id).text('Play').on('click', playSong); //creates edit button with donut id and carries a function editDonut in which we will define later
-  //
-  //               // var edit = $('<button>').data('Donut-id', data[i].id).text('Edit').on('click', editDonut); //creates edit button with donut id and carries a function editDonut in which we will define later
-  //               var del = $('<button>').data('Data-id', data[i]._id).text('Delete').on('click', deleteMusic);  //creates delete button with donut id and carries a function deleteDonut in which we will define later
-  //               var container = $('<div>').attr('Data-id', data[i]._id);
-  //               $(container).append(id, title, play, del); //append all the paragraphs and buttons to a div container
-  //               $('body').append(container) //lastly, append the container to the body tag for it to appear
-  //               $('#new-form').hide();  //when new donut is created when user clicks create, hide the 'new form'
-  //             }
-  //         })
-  //       })
-  //     // })
+  //-----CREATE MUSIC-----
+
+  // $('#new').on('click', function(){
+  //       $('#new-form').show();  //when you click on the new button, the new form appears
+        $('#upload').on('click', function(){ //when you hit the create button.....
+          var formData = new FormData($('#new-form')[0]);
+          console.log('upload button clicked!')
+          console.log(formData)
+
+            $.ajax({
+              url: 'http://localhost:3000/api/',
+              type: 'POST',
+              data: formData,
+              processData: false,
+              contentType: false,
+              // mimeType: "multipart/form-data",
+              success: function(data){  //if successful upon grabbing data
+                console.log(data);
+                console.log('Created music')
+                  var id = $('<p>').text("Id:" + data._id);
+                  var title = $('<p>').text("Title:" + data.originalname);
+                  var play = $('<button>').data('Data-id', data._id).text('Play').on('click', playSong); //creates edit button with donut id and carries a function editDonut in which we will define later
+
+                  // var edit = $('<button>').data('Donut-id', data[i].id).text('Edit').on('click', editDonut); //creates edit button with donut id and carries a function editDonut in which we will define later
+                  var del = $('<button>').data('Data-id', data._id).text('Delete').on('click', deleteMusic);  //creates delete button with donut id and carries a function deleteDonut in which we will define later
+                  var container = $('<div>').attr('Data-id', data._id);
+                  $(container).append(id, title, play, del); //append all the paragraphs and buttons to a div container
+                  $('body').append(container) //lastly, append the container to the body tag for it to appear
+                // $('#new-form').hide();  //when new donut is created when user clicks create, hide the 'new form'
+              }
+          })
+        })
+      // })
 
 
 
@@ -102,7 +107,7 @@ $(function(){
 var play = function(id) {
   console.log('play function working')
   var audio = new Audio();
-  audio.src = 'https://cc3e7e34.ngrok.io/api/'+id+'/media';
+  audio.src = 'http://localhost:3000/api/'+id+'/media';
   audio.controls = true;
   audio.loop = true;
   audio.autoplay = true;
