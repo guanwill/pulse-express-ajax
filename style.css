@@ -3,6 +3,9 @@
   color: white;
 }
 
+element.style {
+}
+
 button {
   background: black;
 }
@@ -28,7 +31,7 @@ html, body {
   /*Change color time */
   -webkit-animation: hue 30s infinite linear;
   opacity: .8;
-  z-index: -1;
+  z-index: -2;
 }
 
 /* Fade in and out */
@@ -67,13 +70,19 @@ body {
 .grid-top,
 .grid-bottom {
   position: absolute;
-  z-index: 0;  /* to be below the parent element */
+  z-index: -1;  /* to be below the parent element */
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   margin: auto;
   background-size: 50px 50px;
+}
+
+#analyser_render {
+  top: 0;
+  position: absolute;
+  z-index: -2;
 }
 
 /* Copy and paste grid effect */
@@ -135,6 +144,3 @@ div#mp3_player > canvas {
   /* float: left; */
 }
 
-#analyser_render {
-  z-index: 9000;
-}
