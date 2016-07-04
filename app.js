@@ -90,9 +90,9 @@ $.ajax({
   var play = function(id) {
     var audio = new Audio();
     audio.src = 'http://localhost:3000/api/'+id+'/media';
-    // audio.controls = true;
-    // audio.loop = true;
-    // audio.autoplay = true;
+    audio.controls = true;
+    audio.loop = true;
+    audio.autoplay = true;
     audio.crossOrigin = 'anonymous'
 
     //establish all variables that analyser will Use
@@ -128,21 +128,21 @@ $.ajax({
       //ANIMATING OUR MUSIC
         // frameLooper() animates any style of graphics you wish to the audio frequency
         // Looping at the default frame rate that the browser provides(approx. 60 FPS)
-      // function frameLooper(){
-      //   window.requestAnimationFrame(frameLooper);
-      //   fbc_array = new Uint8Array(analyser.frequencyBinCount);
-      //   analyser.getByteFrequencyData(fbc_array);
-      //   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-      //   ctx.fillStyle = 'rgba(240,98,146,0.9)'; // Color of the bars
-      //   bars = 1000;
-      //   for (var i = 0; i < bars; i++) {
-      //     bar_x = i * 4;
-      //     bar_width = 3;
-      //     bar_height = -(fbc_array[i] / 2);
-      //     //  fillRect( x, y, width, height ) // Explanation of the parameters below
-      //     ctx.fillRect(bar_x, canvas.height, bar_width, bar_height);
-      //   }
-      // }
+      function frameLooper(){
+        window.requestAnimationFrame(frameLooper);
+        fbc_array = new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(fbc_array);
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+        ctx.fillStyle = 'rgba(240,98,146,0.4)'; // Color of the bars
+        bars = 1000;
+        for (var i = 0; i < bars; i++) {
+          bar_x = i * 4;
+          bar_width = 3;
+          bar_height = -(fbc_array[i] / 2);
+          //  fillRect( x, y, width, height ) // Explanation of the parameters below
+          ctx.fillRect(bar_x, canvas.height, bar_width, bar_height);
+        }
+      }
 
 
 

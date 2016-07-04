@@ -74,7 +74,7 @@ function frameLooper(audio, videoContext, audioContext){
         return featureNotSupported();
       }
 
-      // videoContext = new AudioContext();
+      videoContext = new AudioContext();
 
       document.body.appendChild(videoContext.canvas);
 
