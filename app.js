@@ -70,7 +70,7 @@ $.ajax({
   processData: false,
   mimeType: "multipart/form-data",
   success: function(data){  //if successful upon grabbing data
-  console.log(data);
+  var data = JSON.parse(data);
   var id = $('<p>').text("Id:" + data._id);
   var title = $('<p>').text("Title:" + data.originalname);
   var play = $('<button>').data('Data-id', data._id).text('Play').on('click', playSong); //creates edit button with donut id and carries a function editDonut in which we will define later
@@ -635,4 +635,3 @@ var play = function(id) {
                                                                                                                       //   });
                                                                                                                       // }
                                                                                                                     });
-
