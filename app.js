@@ -85,62 +85,62 @@ $.ajax({
     })
   })
 
-//-----------------VISUALS----------------
-var play = function(id) {
-  var audio = new Audio();
-  audio.src = 'http://localhost:3000/api/'+id+'/media';
-  audio.controls = true;
-  audio.loop = true;
-  audio.autoplay = true;
-  audio.crossOrigin = 'anonymous'
+  //-----------------VISUALS----------------
+  var play = function(id) {
+    var audio = new Audio();
+    audio.src = 'http://localhost:3000/api/'+id+'/media';
+    audio.controls = true;
+    audio.loop = true;
+    audio.autoplay = true;
+    audio.crossOrigin = 'anonymous'
 
-  //establish all variables that analyser will Use
-  var canvas, ctx, source, context, analyser, fbc_array, bars, bar_x, bar_width, bar_height;
-  //initialize mp3 player after pages loads all html
-  // window.addEventListener("load", initMp3Player, true);
+    //establish all variables that analyser will Use
+    var canvas, ctx, source, context, analyser, fbc_array, bars, bar_x, bar_width, bar_height;
+    //initialize mp3 player after pages loads all html
+    // window.addEventListener("load", initMp3Player, true);
 
-  initMp3Player();
+    initMp3Player();
 
-  console.log('playing music'
-  )
-  function initMp3Player(){
+    console.log('playing music'
+    )
+    function initMp3Player(){
 
 
-  //SETTING UP OUR MUSIC PLAYGROUND
-    document.getElementById('audio_box').appendChild(audio); //grabs our music src and put it in our audio_box div
-    context = new AudioContext(); // we need a container or playground where all the audio lives. It provides access to Web Audio API. It is an interface that represents audio-processing graph built from audio modules linked together. defines how the audio stream flows from its source (often an audio file) to its destination (often your speakers). As audio passes through each node, its properties can be modified or inspected. The simplest audio context is a connection directly form a source node to a destination node.
-    analyser = context.createAnalyser(); // we need to be able to extract data from audio source and creates analyserNodes, which includes audio time and frequency and allows to create animations
+      //SETTING UP OUR MUSIC PLAYGROUND
+      document.getElementById('audio_box').appendChild(audio); //grabs our music src and put it in our audio_box div
+      context = new AudioContext(); // we need a container or playground where all the audio lives. It provides access to Web Audio API. It is an interface that represents audio-processing graph built from audio modules linked together. defines how the audio stream flows from its source (often an audio file) to its destination (often your speakers). As audio passes through each node, its properties can be modified or inspected. The simplest audio context is a connection directly form a source node to a destination node.
+      analyser = context.createAnalyser(); // we need to be able to extract data from audio source and creates analyserNodes, which includes audio time and frequency and allows to create animations
 
-    //SETTING UP OUR CANVAS BOARD
-    canvas = document.getElementById('analyser_render'); //we neeed a canvas which is a graphics drawing board. Here we are targeting analyser_render which gives it dimensions, etc. defining our canvas
-    ctx = canvas.getContext('2d'); //ctx stands for context. This initializes its 2d context for drawing
+      //SETTING UP OUR CANVAS BOARD
+      canvas = document.getElementById('analyser_render'); //we neeed a canvas which is a graphics drawing board. Here we are targeting analyser_render which gives it dimensions, etc. defining our canvas
+      ctx = canvas.getContext('2d'); //ctx stands for context. This initializes its 2d context for drawing
 
-    //GRABBING THE MUSIC
-    source = context.createMediaElementSource(audio); //this method allows us to create a node from an HTML Audio element, given that there is one
-    source.connect(analyser); //this connects the music grabbed above, creates nodes so we can manipulate it with visuals
-    analyser.connect(context.destination); //this produces sound from your music file by connecting the analyser to the source
+      //GRABBING THE MUSIC
+      source = context.createMediaElementSource(audio); //this method allows us to create a node from an HTML Audio element, given that there is one
+      source.connect(analyser); //this connects the music grabbed above, creates nodes so we can manipulate it with visuals
+      analyser.connect(context.destination); //this produces sound from your music file by connecting the analyser to the source
 
-    frameLooper(); //play this function for the vsuals
+      frameLooper(); //play this function for the vsuals
 
-    //ANIMATING OUR MUSIC
-    // frameLooper() animates any style of graphics you wish to the audio frequency
-    // Looping at the default frame rate that the browser provides(approx. 60 FPS)
-    function frameLooper(){
-      window.requestAnimationFrame(frameLooper);
-      fbc_array = new Uint8Array(analyser.frequencyBinCount);
-      analyser.getByteFrequencyData(fbc_array);
-      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-      ctx.fillStyle = 'rgba(80, 60, 190, 0.9)'; // Color of the bars
-      bars = 200;
-      for (var i = 0; i < bars; i++) {
-        bar_x = i * 4;
-        bar_width = 3;
-        bar_height = -(fbc_array[i] / 2);
-        //  fillRect( x, y, width, height ) // Explanation of the parameters below
-        ctx.fillRect(bar_x, canvas.height, bar_width, bar_height);
+      //ANIMATING OUR MUSIC
+      // frameLooper() animates any style of graphics you wish to the audio frequency
+      // Looping at the default frame rate that the browser provides(approx. 60 FPS)
+      function frameLooper(){
+        window.requestAnimationFrame(frameLooper);
+        fbc_array = new Uint8Array(analyser.frequencyBinCount);
+        analyser.getByteFrequencyData(fbc_array);
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+        ctx.fillStyle = 'rgba(240,98,146,0.5)'; // Color of the bars
+        bars = 200;
+        for (var i = 0; i < bars; i++) {
+          bar_x = i * 4;
+          bar_width = 3;
+          bar_height = -(fbc_array[i] / 2);
+          //  fillRect( x, y, width, height ) // Explanation of the parameters below
+          ctx.fillRect(bar_x, canvas.height, bar_width, bar_height);
+        }
       }
     }
   }
-}
 });
 
