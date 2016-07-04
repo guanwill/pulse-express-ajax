@@ -50,6 +50,7 @@ function deleteMusic(){
       $('div[Data-id="'+MusicId+'"]').remove(); //remember your div container contains a specific id when we create it? we pass it the DonutId variable with specific id, so now it looks for a div with THAT id, then removes it entirely
     },
     error: function(data) {
+
     }
   })
 }
@@ -126,6 +127,7 @@ $.ajax({
       // frameLooper() animates any style of graphics you wish to the audio frequency
       // Looping at the default frame rate that the browser provides(approx. 60 FPS)
       function frameLooper(){
+        // console.log(Audio);
         window.requestAnimationFrame(frameLooper);
         fbc_array = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(fbc_array);
