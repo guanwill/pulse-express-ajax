@@ -1,8 +1,9 @@
-function frameLooper(){
+function frameLooper(audio, videoContext, audioContext){
+
   var media = [
-    "https://dl.dropboxusercontent.com/u/250610/Dynatron%20-%20Pulse%20Power-Ak1-qLbHHCM.mp3"
-    // Audio
+    audio
     ],
+
     fftSize = 1024,
     // [32, 64, 128, 256, 512, 1024, 2048]
 
@@ -60,22 +61,22 @@ function frameLooper(){
 
     rotation = 0,
     msgElement = document.querySelector('#loading .msg'),
-    avg, ctx, actx, asource, gainNode, analyser, frequencyData, frequencyDataLength, timeData;
+    avg, videoContext, audioContext, asource, gainNode, analyser, frequencyData, frequencyDataLength, timeData;
 
 
-    window.addEventListener('load', initialize, false);
+    //window.addEventListener('load', initialize, false);
     window.addEventListener('resize', resizeHandler, false);
+    initialize(videoContext);
 
 
-    function initialize() {
+    function initialize(videoContext) {
       if (!AudioContext) {
         return featureNotSupported();
       }
 
-      ctx = document.createElement('canvas').getContext('2d');
-      actx = new AudioContext();
+      // videoContext = new AudioContext();
 
-      document.body.appendChild(ctx.canvas);
+      document.body.appendChild(videoContext.canvas);
 
       resizeHandler();
       initializeAudio();
@@ -87,11 +88,11 @@ function frameLooper(){
     }
 
     function hideLoader() {
-      return document.getElementById('loading').className = "hide";
+      //return document.getElementById('loading').className = "hide";
     }
 
     function updateLoadingMessage(text) {
-      msgElement.textContent = text;
+      //msgElement.textContent = text;
     }
 
     function initializeAudio() {
@@ -104,22 +105,22 @@ function frameLooper(){
 
       xmlHTTP.onload = function(e) {
         updateLoadingMessage("- Decoding Audio File Data -");
-        analyser = actx.createAnalyser();
+        analyser = audioContext.createAnalyser();
         analyser.fftSize = fftSize;
         analyser.minDecibels = -100;
         analyser.maxDecibels = -30;
         analyser.smoothingTimeConstant = 0.8;
 
-        actx.decodeAudioData(this.response, function(buffer) {
+        audioContext.decodeAudioData(this.response, function(buffer) {
           console.timeEnd('decoding audio data');
 
-          msgElement.textContent = "- Ready -";
+          //msgElement.textContent = "- Ready -";
 
           audio_buffer = buffer;
-          gainNode = actx.createGain();
+          gainNode = audioContext.createGain();
 
           gainNode.connect(analyser);
-          analyser.connect(actx.destination);
+          analyser.connect(audioContext.destination);
 
           frequencyDataLength = analyser.frequencyBinCount;
           frequencyData = new Uint8Array(frequencyDataLength);
@@ -148,7 +149,7 @@ function frameLooper(){
       });
 
       playAudio();
-      hideLoader();
+      // hideLoader();
     }
 
     function toggleAudio(){
@@ -159,7 +160,7 @@ function frameLooper(){
       playing = true;
       startedAt = pausedAt ? Date.now() - pausedAt : Date.now();
       asource = null;
-      asource = actx.createBufferSource();
+      asource = audioContext.createBufferSource();
       asource.buffer = audio_buffer;
       asource.loop = true;
       asource.connect(gainNode);
@@ -185,18 +186,18 @@ function frameLooper(){
     }
 
     function clearCanvas() {
-      var gradient = ctx.createLinearGradient(0, 0, 0, h);
+      var gradient = videoContext.createLinearGradient(0, 0, 0, h);
 
       gradient.addColorStop(0, background_gradient_color_1);
       gradient.addColorStop(0.96, background_gradient_color_2);
       gradient.addColorStop(1, background_gradient_color_3);
 
-      ctx.beginPath();
-      ctx.globalCompositeOperation = "source-over";
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, w, h);
-      ctx.fill();
-      ctx.closePath();
+      videoContext.beginPath();
+      videoContext.globalCompositeOperation = "source-over";
+      videoContext.fillStyle = gradient;
+      videoContext.fillRect(0, 0, w, h);
+      videoContext.fill();
+      videoContext.closePath();
 
       gradient = null;
     }
@@ -220,12 +221,12 @@ function frameLooper(){
           continue;
         }
 
-        ctx.beginPath();
-        ctx.globalCompositeOperation = "lighter";
-        ctx.fillStyle = p.color;
-        ctx.arc(p.x + cx, p.y + cy, p.radius, PI_TWO, false);
-        ctx.fill();
-        ctx.closePath();
+        videoContext.beginPath();
+        videoContext.globalCompositeOperation = "lighter";
+        videoContext.fillStyle = p.color;
+        videoContext.arc(p.x + cx, p.y + cy, p.radius, PI_TWO, false);
+        videoContext.fill();
+        videoContext.closePath();
       }
 
       i = len = p = tick = null;
@@ -237,25 +238,25 @@ function frameLooper(){
       if (avg > AVG_BREAK_POINT) {
         rotation += -bubble_avg_tick;
         value = avg + random() * 10;
-        ctx.strokeStyle = bubble_avg_line_color_2;
-        ctx.fillStyle = bubble_avg_color_2;
+        videoContext.strokeStyle = bubble_avg_line_color_2;
+        videoContext.fillStyle = bubble_avg_color_2;
       } else {
         rotation += bubble_avg_tick;
         value = avg;
-        ctx.strokeStyle = bubble_avg_line_color;
-        ctx.fillStyle = bubble_avg_color;
+        videoContext.strokeStyle = bubble_avg_line_color;
+        videoContext.fillStyle = bubble_avg_color;
       }
 
-      ctx.beginPath();
-      ctx.lineWidth = 1;
-      ctx.lineCap = "round";
+      videoContext.beginPath();
+      videoContext.lineWidth = 1;
+      videoContext.lineCap = "round";
 
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(rotation);
-      ctx.translate(-cx, -cy);
+      videoContext.save();
+      videoContext.translate(cx, cy);
+      videoContext.rotate(rotation);
+      videoContext.translate(-cx, -cy);
 
-      ctx.moveTo(avg_points[0].dx, avg_points[0].dy);
+      videoContext.moveTo(avg_points[0].dx, avg_points[0].dy);
 
       for (i = 0, len = TOTAL_AVG_POINTS; i < len - 1; i ++) {
         p = avg_points[i];
@@ -264,7 +265,7 @@ function frameLooper(){
         xc = (p.dx + avg_points[i+1].dx) / 2;
         yc = (p.dy + avg_points[i+1].dy) / 2;
 
-        ctx.quadraticCurveTo(p.dx, p.dy, xc, yc);
+        videoContext.quadraticCurveTo(p.dx, p.dy, xc, yc);
       }
 
       p = avg_points[i];
@@ -273,13 +274,13 @@ function frameLooper(){
       xc = (p.dx + avg_points[0].dx) / 2;
       yc = (p.dy + avg_points[0].dy) / 2;
 
-      ctx.quadraticCurveTo(p.dx, p.dy, xc, yc);
-      ctx.quadraticCurveTo(xc, yc, avg_points[0].dx, avg_points[0].dy);
+      videoContext.quadraticCurveTo(p.dx, p.dy, xc, yc);
+      videoContext.quadraticCurveTo(xc, yc, avg_points[0].dx, avg_points[0].dy);
 
-      ctx.stroke();
-      ctx.fill();
-      ctx.restore();
-      ctx.closePath();
+      videoContext.stroke();
+      videoContext.fill();
+      videoContext.restore();
+      videoContext.closePath();
 
       i = len = p = value = xc = yc = null;
     }
@@ -289,24 +290,24 @@ function frameLooper(){
 
       if (avg > AVG_BREAK_POINT) {
         rotation += waveform_tick;
-        ctx.strokeStyle = waveform_line_color_2;
-        ctx.fillStyle = waveform_color_2;
+        videoContext.strokeStyle = waveform_line_color_2;
+        videoContext.fillStyle = waveform_color_2;
       } else {
         rotation += -waveform_tick;
-        ctx.strokeStyle = waveform_line_color;
-        ctx.fillStyle = waveform_color;
+        videoContext.strokeStyle = waveform_line_color;
+        videoContext.fillStyle = waveform_color;
       }
 
-      ctx.beginPath();
-      ctx.lineWidth = 1;
-      ctx.lineCap = "round";
+      videoContext.beginPath();
+      videoContext.lineWidth = 1;
+      videoContext.lineCap = "round";
 
-      ctx.save();
-      ctx.translate(cx, cy);
-      ctx.rotate(rotation)
-      ctx.translate(-cx, -cy);
+      videoContext.save();
+      videoContext.translate(cx, cy);
+      videoContext.rotate(rotation)
+      videoContext.translate(-cx, -cy);
 
-      ctx.moveTo(points[0].dx, points[0].dy);
+      videoContext.moveTo(points[0].dx, points[0].dy);
 
       for (i = 0, len = TOTAL_POINTS; i < len - 1; i ++) {
         p = points[i];
@@ -316,7 +317,7 @@ function frameLooper(){
         xc = (p.dx + points[i+1].dx) / 2;
         yc = (p.dy + points[i+1].dy) / 2;
 
-        ctx.quadraticCurveTo(p.dx, p.dy, xc, yc);
+        videoContext.quadraticCurveTo(p.dx, p.dy, xc, yc);
       }
 
       value = timeData[i];
@@ -326,13 +327,13 @@ function frameLooper(){
       xc = (p.dx + points[0].dx) / 2;
       yc = (p.dy +points[0].dy) / 2;
 
-      ctx.quadraticCurveTo(p.dx, p.dy, xc, yc);
-      ctx.quadraticCurveTo(xc, yc, points[0].dx, points[0].dy);
+      videoContext.quadraticCurveTo(p.dx, p.dy, xc, yc);
+      videoContext.quadraticCurveTo(xc, yc, points[0].dx, points[0].dy);
 
-      ctx.stroke();
-      ctx.fill();
-      ctx.restore();
-      ctx.closePath();
+      videoContext.stroke();
+      videoContext.fill();
+      videoContext.restore();
+      videoContext.closePath();
 
       i = len = p = value = xc = yc = null;
     }
@@ -467,8 +468,8 @@ function frameLooper(){
       cx = w / 2;
       cy = h / 2;
 
-      ctx.canvas.width = w;
-      ctx.canvas.height = h;
+      videoContext.canvas.width = w;
+      videoContext.canvas.height = h;
 
       points.forEach(function(p) {
         p.updateDynamics();
