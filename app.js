@@ -15,12 +15,14 @@ $.ajax({
     for(var i=0; i<data.length; i++){   //loops through data, and for each data, print out the following. Also pass the data's id to the container, edit, and delete button
     var id = $('<p>').text("Id:" + data[i]._id);
     var title = $('<p>').text("Title:" + data[i].originalname);
+    // var play = $('<button>').data('Data-id', data[i]._id).text('Play').attr('class', 'waves-effect waves-light btn-large pink lighten-2').on('click', playSong); //creates edit button with donut id and carries a function editDonut in which we will define later
     var play = $('<button>').data('Data-id', data[i]._id).text('Play').on('click', playSong); //creates edit button with donut id and carries a function editDonut in which we will define later
 
     // var edit = $('<button>').data('Donut-id', data[i].id).text('Edit').on('click', editDonut); //creates edit button with donut id and carries a function editDonut in which we will define later
     var del = $('<button>').data('Data-id', data[i]._id).text('Delete').on('click', deleteMusic);  //creates delete button with donut id and carries a function deleteDonut in which we will define later
     var container = $('<div>').attr('Data-id', data[i]._id);
-    $(container).append(id, title, play, del); //append all the paragraphs and buttons to a div container
+    // $(container).append(id, title, play, del); //append all the paragraphs and buttons to a div container
+    $(container).append(title, play, del); //append all the paragraphs and buttons to a div container
     $('body').append(container) //lastly, append the container to the body tag for it to appear
   }
 });
@@ -31,7 +33,6 @@ function playSong() {
     url: 'http://localhost:3000/api/'+MusicId,
     method: 'GET',
     success: function(data){
-
       $('#mp3_player').show();
       play(MusicId);
     },
