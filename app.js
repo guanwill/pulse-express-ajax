@@ -117,9 +117,11 @@ $.ajax({
       ctx = canvas.getContext('2d'); //ctx stands for context. This initializes its 2d context for drawing
 
       //GRABBING THE MUSIC
-      source = context.createMediaElementSource(audio); //this method allows us to create a node from an HTML Audio element, given that there is one
+       source = context.createMediaElementSource(audio); //this method allows us to create a node from an HTML Audio element, given that there is one
       source.connect(analyser); //this connects the music grabbed above, creates nodes so we can manipulate it with visuals
       analyser.connect(context.destination); //this produces sound from your music file by connecting the analyser to the source
+      frameLooper(audio.src, ctx, context); //play this function for the visuals
+
 
       frameLooper(); //play this function for the vsuals
 
@@ -127,13 +129,12 @@ $.ajax({
       // frameLooper() animates any style of graphics you wish to the audio frequency
       // Looping at the default frame rate that the browser provides(approx. 60 FPS)
       function frameLooper(){
-        // console.log(Audio);
         window.requestAnimationFrame(frameLooper);
         fbc_array = new Uint8Array(analyser.frequencyBinCount);
         analyser.getByteFrequencyData(fbc_array);
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-        ctx.fillStyle = 'rgba(240,98,146,0.5)'; // Color of the bars
-        bars = 200;
+        ctx.fillStyle = 'rgba(240,98,146,0.9)'; // Color of the bars
+        bars = 1000;
         for (var i = 0; i < bars; i++) {
           bar_x = i * 4;
           bar_width = 3;
