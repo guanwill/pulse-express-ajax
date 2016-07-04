@@ -3,6 +3,9 @@
   color: white;
 }
 
+element.style {
+}
+
 button {
   background: black;
 }
@@ -28,7 +31,7 @@ html, body {
   /*Change color time */
   -webkit-animation: hue 30s infinite linear;
   opacity: .8;
-  z-index: -1;
+  z-index: -2;
 }
 
 /* Fade in and out */
@@ -67,7 +70,7 @@ body {
 .grid-top,
 .grid-bottom {
   position: absolute;
-  z-index: 0;  /* to be below the parent element */
+  z-index: -1;  /* to be below the parent element */
   top: 0;
   right: 0;
   bottom: 0;
@@ -76,10 +79,16 @@ body {
   background-size: 50px 50px;
 }
 
+#analyser_render {
+  top: 0;
+  position: absolute;
+  z-index: -2;
+}
+
 /* Copy and paste grid effect */
 .grid-top {
-  background-image: -webkit-linear-gradient(90deg, transparent 19%, rgba(184, 1, 179, 0.3) 24%, #b900b4 25%, #b900b4 26%, rgba(184, 1, 179, 0.3) 27%, transparent 32%, transparent 69%, rgba(184, 1, 179, 0.3) 74%, #b900b4 75%, #b900b4 76%, rgba(184, 1, 179, 0.3) 77%, transparent 82%, transparent), -webkit-linear-gradient(0deg, transparent 19%, rgba(184, 1, 179, 0.3) 24%, #b900b4 25%, #b900b4 26%, rgba(184, 1, 179, 0.3) 27%, transparent 32%, transparent 69%, rgba(184, 1, 179, 0.3) 74%, #b900b4 75%, #b900b4 76%, rgba(184, 1, 179, 0.3) 77%, transparent 82%, transparent);
-  background-image: linear-gradient(0deg, transparent 19%, rgba(184, 1, 179, 0.3) 24%, #b900b4 25%, #b900b4 26%, rgba(184, 1, 179, 0.3) 27%, transparent 32%, transparent 69%, rgba(184, 1, 179, 0.3) 74%, #b900b4 75%, #b900b4 76%, rgba(184, 1, 179, 0.3) 77%, transparent 82%, transparent), linear-gradient(90deg, transparent 19%, rgba(184, 1, 179, 0.3) 24%, #b900b4 25%, #b900b4 26%, rgba(184, 1, 179, 0.3) 27%, transparent 32%, transparent 69%, rgba(184, 1, 179, 0.3) 74%, #b900b4 75%, #b900b4 76%, rgba(184, 1, 179, 0.3) 77%, transparent 82%, transparent);
+  background-image: -webkit-linear-gradient(90deg, transparent 19%, rgba(24,255,255, 0.3) 24%, #18ffff 25%, #18ffff 26%, rgba(24,255,255, 0.3) 27%, transparent 32%, transparent 69%, rgba(24,255,255, 0.3) 74%, #18ffff 75%, #18ffff 76%, rgba(24,255,255, 0.3) 77%, transparent 82%, transparent), -webkit-linear-gradient(0deg, transparent 19%, rgba(24,255,255, 0.3) 24%, #18ffff 25%, #18ffff 26%, rgba(24,255,255, 0.3) 27%, transparent 32%, transparent 69%, rgba(24,255,255, 0.3) 74%, #18ffff 75%, #18ffff 76%, rgba(24,255,255, 0.3) 77%, transparent 82%, transparent);
+  background-image: linear-gradient(0deg, transparent 19%, rgba(24,255,255, 0.3) 24%, #18ffff 25%, #18ffff 26%, rgba(24,255,255, 0.3) 27%, transparent 32%, transparent 69%, rgba(24,255,255, 0.3) 74%, #18ffff 75%, #18ffff 76%, rgba(24,255,255, 0.3) 77%, transparent 82%, transparent), linear-gradient(90deg, transparent 19%, rgba(24,255,255, 0.3) 24%, #18ffff 25%, #18ffff 26%, rgba(24,255,255, 0.3) 27%, transparent 32%, transparent 69%, rgba(24,255,255, 0.3) 74%, #18ffff 75%, #18ffff 76%, rgba(24,255,255, 0.3) 77%, transparent 82%, transparent);
   -webkit-transform: rotateX(-80deg) scale(2);
   transform: rotateX(-80deg) scale(2);
   -webkit-transform-origin: top center;
@@ -91,10 +100,10 @@ body {
 
 /* Add grid to bottom */
 .grid-bottom {
-  background-image: -webkit-linear-gradient(90deg, transparent 19%, rgba(13, 229, 255, 0.3) 24%, #0de5ff 25%, #0de5ff 26%, rgba(13, 229, 255, 0.3) 27%, transparent 32%, transparent 69%, rgba(13, 229, 255, 0.3) 74%, #0de5ff 75%, #0de5ff 76%, rgba(13, 229, 255, 0.3) 77%, transparent 82%, transparent),
-  -webkit-linear-gradient(0deg, transparent 19%, rgba(13, 229, 255, 0.3) 24%, #0de5ff 25%, #0de5ff 26%, rgba(13, 229, 255, 0.3) 27%, transparent 32%, transparent 69%, rgba(13, 229, 255, 0.3) 74%, #0de5ff 75%, #0de5ff 76%, rgba(13, 229, 255, 0.3) 77%, transparent 82%, transparent);
-  background-image: linear-gradient(0deg, transparent 19%, rgba(13, 229, 255, 0.3) 24%, #0de5ff 25%, #0de5ff 26%, rgba(13, 229, 255, 0.3) 27%, transparent 32%, transparent 69%, rgba(13, 229, 255, 0.3) 74%, #0de5ff 75%, #0de5ff 76%, rgba(13, 229, 255, 0.3) 77%, transparent 82%, transparent),
-  linear-gradient(90deg, transparent 19%, rgba(13, 229, 255, 0.3) 24%, #0de5ff 25%, #0de5ff 26%, rgba(13, 229, 255, 0.3) 27%, transparent 32%, transparent 69%, rgba(13, 229, 255, 0.3) 74%, #0de5ff 75%, #0de5ff 76%, rgba(13, 229, 255, 0.3) 77%, transparent 82%, transparent);
+  background-image: -webkit-linear-gradient(90deg, transparent 19%, rgba(206,147,216, 0.3) 24%, #ce93d8 25%, #ce93d8 26%, rgba(206,147,216, 0.3) 27%, transparent 32%, transparent 69%, rgba(206,147,216, 0.3) 74%, #ce93d8 75%, #ce93d8 76%, rgba(206,147,216, 0.3) 77%, transparent 82%, transparent),
+  -webkit-linear-gradient(0deg, transparent 19%, rgba(206,147,216, 0.3) 24%, #ce93d8 25%, #ce93d8 26%, rgba(206,147,216, 0.3) 27%, transparent 32%, transparent 69%, rgba(206,147,216, 0.3) 74%, #ce93d8 75%, #ce93d8 76%, rgba(206,147,216, 0.3) 77%, transparent 82%, transparent);
+  background-image: linear-gradient(0deg, transparent 19%, rgba(206,147,216, 0.3) 24%, #ce93d8 25%, #ce93d8 26%, rgba(206,147,216, 0.3) 27%, transparent 32%, transparent 69%, rgba(206,147,216, 0.3) 74%, #ce93d8 75%, #ce93d8 76%, rgba(206,147,216, 0.3) 77%, transparent 82%, transparent),
+  linear-gradient(90deg, transparent 19%, rgba(206,147,216, 0.3) 24%, #ce93d8 25%, #ce93d8 26%, rgba(206,147,216, 0.3) 27%, transparent 32%, transparent 69%, rgba(206,147,216, 0.3) 74%, #ce93d8 75%, #ce93d8 76%, rgba(206,147,216, 0.3) 77%, transparent 82%, transparent);
   -webkit-transform: rotateX(80deg) scale(2);
   transform: rotateX(80deg) scale(2);
   -webkit-transform-origin: bottom center;
@@ -135,6 +144,3 @@ div#mp3_player > canvas {
   /* float: left; */
 }
 
-#analyser_render {
-  z-index: 9000;
-}

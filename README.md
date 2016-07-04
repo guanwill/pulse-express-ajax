@@ -1,6 +1,24 @@
-These are the default pink and purple in the materializecss that are close to the graphic image
-#f06292 pink lighten-2
 
-#ce93d8 purple lighten-3
 
-#18ffff cyan accent-2
+# Color defaults
+```
+#f06292
+pink lighten-2
+rgba(240,98,146,0.5)
+```
+
+```
+#ce93d8
+purple lighten-3
+rgba(206,147,216,0.5)
+```
+
+```
+#18ffff
+cyan accent-2
+rgba(24,255,255,0.5)
+```
+
+
+
+
